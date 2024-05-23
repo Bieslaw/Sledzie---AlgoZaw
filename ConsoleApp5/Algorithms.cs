@@ -13,6 +13,7 @@ namespace Sledzie
         public static Graph ConstructGraphFromFile(string path)
         {
             var graph = new Graph();
+            var tempVertexPairs = new List<(int V, int F)>();
             const int BufferSize = 128;
             using (var fileStream = File.OpenRead(path))
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, BufferSize))
@@ -24,24 +25,19 @@ namespace Sledzie
                     var index = int.Parse(lineContent.First());
                     var shares = int.Parse(lineContent.Last());
                     graph.vertices.Add(new Vertex(index, shares));
-                }
-            }
-            using (var fileStream = File.OpenRead(path))
-            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, BufferSize))
-            {
-                string? line;
-                while ((line = streamReader.ReadLine()) != null)
-                {
-                    var lineContent = line.Split(' ');
-                    var vertex = graph.vertices[int.Parse(lineContent.First())];
-                    if (lineContent.Length > 2) // pierwsza linijka jest inna - nie zawiera informacji o śledzonym wierzchołku
+                    if (lineContent.Length > 2)
                     {
-                        var followedVertex = graph.vertices[int.Parse(lineContent[1])];
-                        followedVertex.children.Add(vertex);
-                        followedVertex.neighbors.Add(vertex);
-                        vertex.neighbors.Add(followedVertex);
+                        tempVertexPairs.Add((index, int.Parse(lineContent[1])));
                     }
                 }
+            }
+            foreach (var pair in tempVertexPairs)
+            {
+                var vertex = graph.vertices[pair.V];
+                var followedVertex = graph.vertices[pair.F];
+                followedVertex.children.Add(vertex);
+                followedVertex.neighbors.Add(vertex);
+                vertex.neighbors.Add(followedVertex);
             }
             return graph;
         }
