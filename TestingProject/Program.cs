@@ -11,15 +11,19 @@ namespace TestingProject
         {
             //GenerateTests(50, 10);
             int n = 10;
+            TimeSpan averageTime = new TimeSpan();
+            Stopwatch sw = new Stopwatch();
             for (int i = 0; i < n; i++)
             {
                 string file = "test50_" + i.ToString() + ".txt";
-                Stopwatch sw = new Stopwatch();
-                sw.Start();
+                sw.Restart();
                 Program.Main_withoutWrite(file);
                 sw.Stop();
-                Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                //Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                averageTime += sw.Elapsed;
             }
+            averageTime /= 10;
+            Console.WriteLine(averageTime.ToString());
         }
 
 
