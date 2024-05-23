@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Sledzie
 {
-    static class Program
+    static public class Program
     {
-        static void Main(string[] args)
+        static public void Main(string[] args)
         {
 
             string workingDirectory = Environment.CurrentDirectory;
@@ -34,6 +34,15 @@ namespace Sledzie
                 streamWriter.Write('\n');
                 streamWriter.WriteLine(sum);
             }
+        }
+
+        static public List<Vertex> Main_withoutWrite(string file) //Używane do testów
+        {
+
+            string workingDirectory = Environment.CurrentDirectory;
+            var inFilePath = Path.Combine(workingDirectory, file);
+            var result = Algorithms.MostSharesNoFollowing(inFilePath);
+            return result;
         }
     }
 }

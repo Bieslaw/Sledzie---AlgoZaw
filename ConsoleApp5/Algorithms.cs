@@ -10,7 +10,7 @@ namespace Sledzie
 {
     public class Algorithms
     {
-        static Graph ConstructGraphFromFile(string path)
+        public static Graph ConstructGraphFromFile(string path)
         {
             var graph = new Graph();
             const int BufferSize = 128;
