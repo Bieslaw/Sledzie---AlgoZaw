@@ -12,7 +12,7 @@ namespace Sledzie
         public Graph() { vertices = new List<Vertex>(); }
         public List<Vertex> vertices { get; set; }
 
-        public Vertex vertexOnCycle { get; set; }
+        public Vertex? vertexOnCycle { get; set; }
 
         public void removeVertex(Vertex vertex)
         {

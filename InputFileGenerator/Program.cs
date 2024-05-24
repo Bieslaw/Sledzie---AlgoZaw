@@ -4,13 +4,12 @@
     {
         static void Main(string[] args)
         {
-            Generate(int.Parse(args[0]), args[1]);
+            Generate(int.Parse(args[0]), args[1], int.Parse(args[2]));
         }
 
-        public static void Generate(int n, string fileName)
+        public static void Generate(int n, string fileName, int maxSharing)
         {
             int minSharing = 1;
-            int maxSharing = 100;
             Random random = new Random();
             using (var fileStream = File.OpenWrite(fileName))
             using (var streamWriter = new StreamWriter(fileStream))

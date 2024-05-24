@@ -9,21 +9,25 @@ namespace TestingProject
     {
         static void Main()
         {
-            //GenerateTests(50, 10);
+            //GenerateTests(1000000, 10);
             int n = 10;
-            TimeSpan averageTime = new TimeSpan();
+            List<int> sizes = new List<int>() {100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000, 200000, 500000, 1000000 };
             Stopwatch sw = new Stopwatch();
-            for (int i = 0; i < n; i++)
+            foreach (int size in sizes)
             {
-                string file = "test50_" + i.ToString() + ".txt";
-                sw.Restart();
-                Program.Main_withoutWrite(file);
-                sw.Stop();
-                //Console.WriteLine("Elapsed={0}", sw.Elapsed);
-                averageTime += sw.Elapsed;
+                TimeSpan averageTime = new TimeSpan();
+                for (int i = 0; i < n; i++)
+                {
+                    string file = "test" + size.ToString() + "_" + i.ToString() + ".txt";
+                    sw.Restart();
+                    Program.Main_withoutWrite(file);
+                    sw.Stop();
+                    //Console.WriteLine("Elapsed={0}", sw.Elapsed);
+                    averageTime += sw.Elapsed;
+                }
+                averageTime /= 10;
+                Console.WriteLine("Size: " + size.ToString() + " Time: " + averageTime.TotalMilliseconds.ToString());
             }
-            averageTime /= 10;
-            Console.WriteLine(averageTime.ToString());
         }
 
 
@@ -32,7 +36,7 @@ namespace TestingProject
             string s = "test" + size.ToString() + "_";
             for (int i = 0; i < n; i++)
             {
-                Generator.Generate(20, s + i.ToString() + ".txt");
+                Generator.Generate(size, s + i.ToString() + ".txt", 100);
             }
         }
 

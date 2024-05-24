@@ -52,7 +52,7 @@ namespace Sledzie
             {
                 var resPresent = new List<Vertex>();
                 var resAbsent = new List<Vertex>();
-                var v = component.vertexOnCycle;
+                var v = component.vertexOnCycle!;
                 var vNeighbors = new List<Vertex>(v.neighbors);
                 component.removeVertex(v);
                 var components1 = DFSDisconnected(component);
