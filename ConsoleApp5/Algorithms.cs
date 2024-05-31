@@ -14,6 +14,7 @@ namespace Sledzie
         {
             var graph = new Graph();
             var tempVertexPairs = new List<(int V, int F)>();
+            var tempVertexList = new List<Vertex>();
             const int BufferSize = 128;
             using (var fileStream = File.OpenRead(path))
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, BufferSize))
@@ -24,12 +25,22 @@ namespace Sledzie
                     var lineContent = line.Split(' ');
                     var index = int.Parse(lineContent.First());
                     var shares = int.Parse(lineContent.Last());
-                    graph.vertices.Add(new Vertex(index, shares));
+                    tempVertexList.Add(new Vertex(index, shares));
                     if (lineContent.Length > 2)
                     {
                         tempVertexPairs.Add((index, int.Parse(lineContent[1])));
                     }
                 }
+            }
+            int n = tempVertexList.Count;
+            Vertex[] verticesArray = new Vertex[n];
+            foreach(var v in tempVertexList)
+            {
+                verticesArray[v.index] = v;
+            }
+            for(int i = 0; i < n; i++)
+            {
+                graph.vertices.Add(verticesArray[i]);
             }
             foreach (var pair in tempVertexPairs)
             {
